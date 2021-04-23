@@ -3,8 +3,8 @@ from selenium import webdriver
 import pyautogui
 from twilio.rest import Client
 
-account_sid = 'ACXXXXXXXXXXXXX'
-auth_token = 'XXXXXXXXXXXXXXXXX'
+account_sid = 'AC#################################'
+auth_token = '################################'
 
 def click(a, b):
     pyautogui.moveTo(a, b)
@@ -16,43 +16,54 @@ def mensagem(txt):
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
-        from_='whatsapp:+14XXXXXXXX',
+        from_='whatsapp:+999999999999',
         body=f'{txt}',
-        to='whatsapp:+55XXXXXXXXXXX'
+        to='whatsapp:+999999999999'
     )
-
-
 
 web = webdriver.Chrome()
 web.get('url_da_ferramenta')
 sl(3)
 pyautogui.write('login')
 pyautogui.press('tab')
-pyautogui.write('senha')
+pyautogui.write('Senha')
 pyautogui.press('enter')
 sl(3)
 web.find_element_by_xpath('//*[@id="Logo"]').click()
 sl(1)
 web.find_element_by_xpath('//*[@id="ToolBar"]/li[1]').click()
-sl(3)
-c = 0
+sl(2)
+
 while True:
-    c += 1
+    pag = web.find_element_by_id('OverviewBody').text
     sl(3)
-    t = web.find_element_by_xpath('//*[@id="AppWrapper"]')
-    te = t.text
 
-    if c == 1:
-        sl(5)
-        pyautogui.hotkey('winleft', 'd')
+    if 'Nenhum dado de chamado encontrado.' in pag:
+        print('Não há chamados na fila! ')
 
-    if 'Suporte' in te and 'Admin OTRS' in te:
-        mensagem('Chamado aberto e não capturado na fila!')
-        sl(30)
+    if 'FILA' in pag:
+        lista = []
+        var = ''
+        for i in pag:
+            if '\n' in i:
+                tamanho = len(var)
+                lista.append(var)
+                var = ''
+            var += i
 
-    elif 'Suporte' in te:
-        mensagem('Chamado já foi capturado e está em atendimento!')
-        sl(180)
-    else:
-        mensagem('Sem chamados abertos na fila!')
-        sl(320)
+        if '\nAberto' in lista and '\nAdmin OTRS' in lista:
+            mensagem('Chamado na fila! O mesmo ainda NÃO FOI CAPTURADO!')
+            sl(60)
+
+        if '\nAberto' in lista and '\nnome_do_tecnico' in lista:
+            mensagem('Chamado na fila! E está sendo atendido pelo técnico nome_do_tecnico!')
+            sl(240)
+
+        if '\nAberto' in lista and '\nnome_do_tecnico' in lista:
+            mensagem('Chamado na fila! E está sendo atendido pelo técnico nome_do_tecnico!')
+            sl(240)
+
+        if '\nAberto' in lista and '\nnome_do_tecnico' in lista:
+            mensagem('Chamado na fila! E está sendo atendido pelo técnico nome_do_tecnico!')
+            sl(240)
+
