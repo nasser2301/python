@@ -1,25 +1,30 @@
 from time import sleep as sl
 from selenium import webdriver
-from twilio.rest import Client
 import pyautogui
+from twilio.rest import Client
 
-account_sid = "#####"
-auth_token = "####"
-client = Client(account_sid, auth_token)
-
-def mandar_mensagem(txt):
-    message = client.messages.create(
-        to="+5561999999999",
-        from_="+9999999999",
-        body=f'{txt}')
+account_sid = 'ACXXXXXXXXXXXXX'
+auth_token = 'XXXXXXXXXXXXXXXXX'
 
 def click(a, b):
     pyautogui.moveTo(a, b)
     pyautogui.mouseDown()
     pyautogui.click()
 
+
+def mensagem(txt):
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+        from_='whatsapp:+14XXXXXXXX',
+        body=f'{txt}',
+        to='whatsapp:+55XXXXXXXXXXX'
+    )
+
+
+
 web = webdriver.Chrome()
-web.get('url_da_ferramenta.com.br')
+web.get('url_da_ferramenta')
 sl(3)
 pyautogui.write('login')
 pyautogui.press('tab')
@@ -42,12 +47,12 @@ while True:
         pyautogui.hotkey('winleft', 'd')
 
     if 'Suporte' in te and 'Admin OTRS' in te:
-        mandar_mensagem('Chamado aberto e não capturado na fila!')
+        mensagem('Chamado aberto e não capturado na fila!')
         sl(30)
 
     elif 'Suporte' in te:
-        mandar_mensagem('Chamado já foi capturado e está em atendimento!')
+        mensagem('Chamado já foi capturado e está em atendimento!')
         sl(180)
     else:
-        mandar_mensagem('Sem chamados abertos na fila!')
+        mensagem('Sem chamados abertos na fila!')
         sl(320)
