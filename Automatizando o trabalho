@@ -39,7 +39,7 @@ while True:
     sl(3)
 
     if 'Nenhum dado de chamado encontrado.' in pag:
-        print('Não há chamados na fila! ')
+        mensagem('Não há chamados na fila! ')
 
     if 'FILA' in pag:
         lista = []
