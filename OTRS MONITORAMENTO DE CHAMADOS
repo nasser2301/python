@@ -1,0 +1,38 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from time import sleep as s
+
+url = 'http://urubu.in.iti.gov.br/otrs/index.pl?Action=AgentTicketQueue'
+login = ''
+senha = ''
+
+# Abre o navegador
+w = webdriver.Chrome(executable_path=r'/home/nasser/Desktop/chromedriver')
+w.maximize_window()
+w.get(url)
+w.find_element_by_id('User').send_keys(login)
+w.find_element_by_id('Password').send_keys(senha, Keys.ENTER)
+s(1)
+
+while True:
+
+    filas = w.find_elements_by_xpath('//div[3]/div[1]/div[1]/ul/li/a[@class]')
+
+    for fila in filas:
+        fila = fila.text
+        if 'Suporte' in fila:
+            try:
+                ticket = w.find_element_by_xpath('//*[@id="TicketID_412367"]/td[4]/a').text
+                tecnico = w.find_element_by_xpath('//td[10]/div').get_attribute('title')
+                tempo = w.find_element_by_xpath('//td[5]/div').get_attribute('title')
+                usuario = w.find_element_by_xpath('//td[6]/div[1]').get_attribute('title')
+                assunto = w.find_element_by_xpath('//td[6]/div[2]').get_attribute('title')
+                s(4)
+
+                print(f'Ticket#{ticket} aberto na fila \nUsuário: {usuario} \nAssunto: {assunto}\nTécnico: {tecnico}\nTempo: {tempo}\n\n{fila}')
+                s(60)
+            except:
+                pass
+
+    w.refresh()
+    s(5)
