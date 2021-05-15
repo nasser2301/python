@@ -1,14 +1,7 @@
-import pyautogui as py, datetime, time, pandas as pd, win32com.client as win32, emoji
+import datetime, time, pandas as pd, win32com.client as win32, emoji, os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep as sl
-
-#while True:
-#    hora_atual = datetime.datetime.today().hour
-##    minuto_atual = datetime.datetime.today().minute
- #   if hora_atual == 18 and minuto_atual == 30:
- #       break
-
 
 # variáveis
 mes = str(datetime.date.today().month)
@@ -23,10 +16,10 @@ chamados_estourados_no_inicio_do_atendimento = total_de_chamados = finalizados =
 web = webdriver.Chrome()
 
 # Acessa o otrs
-web.get('http://urubu.in.iti.gov.br/otrs/index.pl')
+web.get('url')
 sl(3)
-web.find_element_by_id('User').send_keys('rhuan.nasser')
-web.find_element_by_id('Password').send_keys('*******', Keys.ENTER)
+web.find_element_by_id('User').send_keys('login')
+web.find_element_by_id('Password').send_keys('senha', Keys.ENTER)
 
 web.maximize_window()
 sl(3)
@@ -46,20 +39,13 @@ web.find_element_by_xpath(f'//*[@id="UseAsRestrictionCreateTimeStopDay"]/option[
 web.find_element_by_xpath(f'//*[@id="UseAsRestrictionCreateTimeStopMonth"]/option[{mes}]').click()
 web.find_element_by_xpath(f'//*[@id="UseAsRestrictionCreateTimeStopYear"]/option[{ano[2:]}]').click()
 web.find_element_by_xpath(f'//*[@id="StartStatistic"]/span').click()
-sl(6)
+sl(3)
 
 # Minimiza a janela
 web.close()
 
 # Renomeia o arquivo
-py.hotkey('winleft', 'q')
-sl(3)
-py.write('cmd')
-sl(3)
-py.press('enter')
-sl(3)
-py.write('rename Downloads\Rel*.xlsx relatorio.xlsx')
-py.press('enter')
+os.system(r'rename C:\Users\nasser\Downloads\Rel*.xlsx relatorio.xlsx')
 
 # Tratamento dos dados
 tabela = pd.read_excel(r"C:\Users\nasser\Downloads\relatorio.xlsx")
@@ -70,7 +56,6 @@ tabela['Primeira Resposta em Minutos'] = tabela['Primeira Resposta em Minutos'].
 tabela['Número'] = tabela['Número'].astype(int)
 tabela['Ticket#'] = tabela['Ticket#'].astype(int)
 tabela['Delta de tempo de solução em minutos'] = tabela['Delta de tempo de solução em minutos'].astype(int)
-
 
 # Hora da abertura do chamado e o Atendente
 m10m = tabela['Primeira Resposta em Minutos'].mean()
@@ -98,10 +83,8 @@ airanildo = tabela.loc[tabela['Atendente/Proprietário'] == 'airanildo.lima', ['
 thiago = tabela.loc[tabela['Atendente/Proprietário'] == 'thiago.gomes', ['Atendente/Proprietário', 'Criado', 'Primeira Resposta', 'Primeira Resposta em Minutos', 'Tempo de solução em minutos']]
 
 # Chamados por setores
-qtde_de_chamados_por_setores = tabela['ID do Cliente'].value_counts()
-setores_mais_usuarios = tabela['Usuário Cliente'].groupby(tabela['ID do Cliente']).value_counts()
-chamados_por_setores = tabela['ID do Cliente'].value_counts(normalize=True).map("{:.1%}".format)
-top_5_setores_porcentagem = chamados_por_setores.head(5)
+por_setor = tabela[['ID do Cliente', 'Ticket#']].groupby(['ID do Cliente']).count()
+por_setor.sort_values(by=['ID do Cliente','Ticket#'], ascending=False)
 
 # Serviços
 servico = tabela['Serviço'].value_counts()
@@ -141,7 +124,7 @@ Início do atendimento <= 10 minutos:
                                  Meta: >= 90%
 
 Quantidade de chamados em compliance: {em_compliance_ate_10_minutos} chamado(s)
-Quantidade de chamados que foram capturados após 10 minutos:  {chamados_estourados_no_inicio_do_atendimento} chamado(s)
+Quantidade de chamados estourados:  {chamados_estourados_no_inicio_do_atendimento} chamado(s)
 Media do tempo dos atendimentos em até 10 minutos:  {media_10_minutos} Segundos
 Meta atual: {porcentagem_estourados_10_minutos:.0f}%
 
@@ -151,7 +134,7 @@ Chamados resolvidos em até 1 hora:
                                  Meta: >= 75%
 
 Quantidade de chamados em compliance: {em_compliance_uma_hora} chamado(s)
-Quantidade de chamados que ultrapassaram 1 hora: {ultrapassou_uma_hora} chamado(s)
+Quantidade de chamados estourados: {ultrapassou_uma_hora} chamado(s)
 Meta atual: {porcentagem_estourados_1_hora:.0f}%
 ----------------------------------------------------------------------------------------------------
 Chamados resolvidos em até 3 horas: 
@@ -159,7 +142,7 @@ Chamados resolvidos em até 3 horas:
                                  Meta: >= 95%
 
 Quantidade de chamados em compliance: {em_compliance_tres_horas} chamado(s)
-Quantidade de chamados que ultrapassaram 1 hora: {ultrapassou_tres_horas} chamado(s)
+Quantidade de chamados estourados: {ultrapassou_tres_horas} chamado(s)
 Meta atual: {porcentagem_estourados_3_hora:.0f}%
 
 ----------------------------------------------------------------------------------------------------
@@ -168,7 +151,7 @@ Chamados resolvidos em até 36 horas:
                                  Meta: >= 100%
 
 Quantidade de chamados em compliance: {em_compliance_trinta_e_seis_horas} chamado(s)
-Quantidade de chamados que ultrapassaram 1 hora: {ultrapassou_trinta_e_seis_horas} chamado(s)
+Quantidade de chamados estourados: {ultrapassou_trinta_e_seis_horas} chamado(s)
 Meta atual: {porcentagem_estourados_36_horas:.0f}%
 
 ----------------------------------------------------------------------------------------------------
@@ -179,7 +162,7 @@ Segue em anexo a base de dados completa para análise adicional.
 
 Atenciosamente,
 Equipe de Atendimento ao Usuário
-{emoji.emojize(":telephone_receiver:(61) 3424-3833   :computer:", use_aliases=True)}'''
+{emoji.emojize(":telephone_receiver:(61) 9999-9999   :computer:", use_aliases=True)}'''
 
 # Exportando para arquivos .xlsx
 tabela.to_excel(fr"C:\Users\nasser\OneDrive\Área de Trabalho\Relatório diário detalhado\Chamados.xlsx", index=False)
@@ -194,7 +177,5 @@ email.Attachments.Add(r'C:\Users\nasser\OneDrive\Área de Trabalho\Relatório di
 # Enviando o e-mail
 email.Send()
 
-py.write(r'del /f /a C:\Users\nasser\Downloads\relatorio.xlsx')
-py.press('enter')
-sl(0.5)
-py.hotkey('alt', 'f4')
+# Exclui a planilha do relatório
+os.system(r'del /f /a C:\Users\nasser\Downloads\relatorio.xlsx')
