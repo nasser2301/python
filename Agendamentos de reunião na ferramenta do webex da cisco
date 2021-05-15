@@ -1,19 +1,22 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 from time import sleep as s
 import datetime
 import re
 
 def day():
+     while True:
+            try:
+                number = int(input('dia (1-31): '))
 
-    while True:
-        number = int(input('Dia (1-31): '))
-
-        if number >= 1 and number <= 31:
-            return number
-            break
-        else:
-            print('Dia inválido! Digite novamente o ', end='')
+                if number >= 1 and number <= 31:
+                    return number
+                    break
+                else:
+                    print('Dia inválido! Digite novamente o ', end='')
+            except ValueError as e:
+                print('Este campo só aceita valores numéricos. Por favor, digite o ', end='')
 def day_of_week():
     while True:
 
@@ -39,109 +42,122 @@ def day_of_week():
             dia = 'Friday'
             return dia
 
+        if dia == 'sabado' or dia == 'sab' or dia == 'saturday' or dia == 'domingo' or dia == 'dom' or dia == 'sunday':
+            print('Não é possível agendar eventos nos finais de semana:', end=' ')
         else:
             print('Inválido, digite conforme o exemplo:', end=' ')
 def hours():
 
     while True:
+        try:
+            num = int(input('hora do início da reunião: (0-23): '))
 
-        num = int(input('Hora do início da reunião: (0-23): '))
-
-        if num <= 23:
-            return num
-        else:
-            print('Inválido, digite conforme o exemplo.', end=' ')
+            if num <= 23:
+                return num
+            else:
+                print('Inválido, digite conforme o exemplo.', end=' ')
+        except ValueError:
+            print('Este campo só aceita valores numéricos. Por favor, digite a ', end='')
 def validar_minuto():
     while True:
+        try:
+            num = int(input('minuto (0-60) (Ex: 05,10,15...): '))
+            if num == 0 or num == 5:
+                return num
+            if num == 5 or num == 10:
+                return num
+            if num == 15 or num == 20:
+                return num
+            if num == 25 or num == 30:
+                return num
+            if num == 35 or num == 40:
+                return num
+            if num == 45 or num == 50:
+                return num
+            if num == 55 or num == 60:
+                return num
+            else:
+                print('Número inválido, digite no intervalo conforme o exemplo', end=' ')
 
-        num = int(input('Minuto (0-60) (Ex: 05,10,15...): '))
-        if num == 0 or num == 5:
-            return num
-        if num == 5 or num == 10:
-            return num
-        if num == 15 or num == 20:
-            return num
-        if num == 25 or num == 30:
-            return num
-        if num == 35 or num == 40:
-            return num
-        if num == 45 or num == 50:
-            return num
-        if num == 55 or num == 60:
-            return num
-        else:
-            print('Número inválido, digite no intervalo conforme o exemplo', end=' ')
+        except ValueError:
+            print('Este campo só aceita valores numéricos. Por favor, digite o ', end='')
 def duration_hours():
 
     while True:
+        try:
+            num = int(input('duração em horas (0-24): '))
 
-        num = int(input('Duração em horas (0-24): '))
+            if num <= 24:
 
-        if num <= 24:
+                if num == 1:
+                    num = str(num)
+                    return num + ' hora'
+                    break
+                if num == 0 or num > 1:
+                    num = str(num)
+                    return num + ' horas'
+                    break
+            if num > 24 or type(num) == str:
+                print('Número Inválido, por favor, digite um número de 0 à 24..\n')
 
-            if num == 1:
-                num = str(num)
-                return num + ' hora'
-                break
-            if num == 0 or num > 1:
-                num = str(num)
-                return num + ' horas'
-                break
-        if num > 24 or type(num) == str:
-            print('Número Inválido, por favor, digite um número de 0 à 24..\n')
+        except ValueError:
+            print('Este campo só aceita valores numéricos. Por favor, digite a ', end='')
 def duration_minutes():
 
 
     while True:
 
-        num = int(input('Duração em minutos (Ex: 0,5,10....): '))
+        try:
+            num = int(input('duração em minutos (Ex: 0,5,10....): '))
 
-        if num <= 60:
+            if num <= 60:
 
-            if num == 0 or num == 5:
-                num = str(num)
-                return num + ' minutos'
-                break
-            if num == 5 or num == 10:
-                num = str(num)
-                return num + ' minutos'
-                break
-            if num == 15 or num == 20:
-                num = str(num)
-                return num + ' minutos'
-                break
-            if num == 25 or num == 30:
-                num = str(num)
-                return num + ' minutos'
-                break
-            if num == 35 or num == 40:
-                num = str(num)
-                return num + ' minutos'
-                break
-            if num == 45 or num == 50:
-                num = str(num)
-                return num + ' minutos'
-                break
-            if num == 55 or num == 60:
-                num = str(num)
-                return num + ' minutos'
-                break
-            else:
-                print('Número inválido, digite no intervalo conforme o exemplo', end=' ')
-        if num > 60:
-            print('Número Inválido, por favor, digite um número de 0 à 60..\n')
+                if num == 0 or num == 5:
+                    num = str(num)
+                    return num + ' minutos'
+                    break
+                if num == 5 or num == 10:
+                    num = str(num)
+                    return num + ' minutos'
+                    break
+                if num == 15 or num == 20:
+                    num = str(num)
+                    return num + ' minutos'
+                    break
+                if num == 25 or num == 30:
+                    num = str(num)
+                    return num + ' minutos'
+                    break
+                if num == 35 or num == 40:
+                    num = str(num)
+                    return num + ' minutos'
+                    break
+                if num == 45 or num == 50:
+                    num = str(num)
+                    return num + ' minutos'
+                    break
+                if num == 55 or num == 60:
+                    num = str(num)
+                    return num + ' minutos'
+                    break
+                else:
+                    print('Número inválido, digite no intervalo conforme o exemplo', end=' ')
+            if num > 60:
+                print('Número Inválido, por favor, digite um número de 0 à 60..\n')
+
+        except ValueError:
+            print('Este campo só aceita valores numéricos. Por favor, digite a ', end='')
+
 
 # Variáveis
 mes = datetime.datetime.today().ctime()[4:7]
-hora = str(datetime.datetime.today().hour)
-minuto = str(datetime.datetime.today().minute)
 dia_atual = str(datetime.date.today().day)
 dia_da_semana_atual = str(datetime.datetime.today().strftime('%A')).capitalize()
 emails = []
 emails_para_colar = ''
-site = ''
-login = ''
-senha = ''
+site = 'url'
+login = 'login'
+senha = 'senha'
 botao_iniciar_sessao_xpath = '//*[@id="guest_signin_split_button-trigger"]/div/button[1]/span'
 campo_para_digitar_o_login = '//*[@id="IDToken1"]'
 campo_para_digitar_a_senha = '//*[@id="IDToken2"]'
@@ -153,6 +169,12 @@ duracao_hora = '//*[@id="scheduleFormSelectDurationHour"]'
 botao_concluido = '//*[@id="scheduleDone"]'
 campo_para_digitar_os_emails = '//*[@id="invite_attendee_input"]'
 botao_iniciar = '//*[@id="scheduleEdit"]'
+link_da_reuniao = '//*[@id="main_content"]/div/div[1]/div[2]/dl/dd[1]/span[1]'
+numero_da_reuniao = '//*[@id="meetingKeySelector"]'
+horario_de_inicio_e_termino = '//*[@id="main_content"]/div/div[1]/div[1]/div[1]/div[2]/div[3]/span[1]'
+dia_agendado = '//*[@id="main_content"]/div/div[1]/div[1]/div[1]/div[2]/div[3]/span[2]'
+emails_criados_na_reuniao = '//div[@class="mdp_attendee_name"]'
+
 
 # Variáveis interativas
 topico_da_reuniao = str(input('Tópico da reunião: ')).title()
@@ -186,11 +208,11 @@ web = webdriver.Chrome()
 
 # Navega no site informado
 web.get(site)
-s(4)
+s(3)
 
 # clica no botão "Iniciar Sessão"
 web.find_element_by_xpath(botao_iniciar_sessao_xpath).click()
-s(6)
+s(4)
 
 # Digita o login e pressiona a tecla "ENTER"
 web.find_element_by_xpath(campo_para_digitar_o_login).send_keys(login, Keys.ENTER)
@@ -271,7 +293,26 @@ s(0.5)
 web.find_element_by_xpath(botao_iniciar).click()
 s(4)
 
+link_da_reuniao = web.find_element_by_xpath(link_da_reuniao).text
+numero_da_reuniao = web.find_element_by_xpath(numero_da_reuniao).text
+horario_de_inicio_e_termino = web.find_element_by_xpath(horario_de_inicio_e_termino).text
+dia_agendado = web.find_element_by_xpath(dia_agendado).text
+emails_criados_na_reuniao = web.find_elements_by_xpath(emails_criados_na_reuniao)
+
+emails2 = list()
+for email in emails_criados_na_reuniao:
+       emails2.append(email.text)
+
 # Fecha o navegador
-web.close()
+#web.close()
 
+print(f'''
+Reunião Agendada conforme solicitado, segue as informações:
 
+Tópico da Reunião: {topico_da_reuniao}
+Dia: {dia_agendado}
+Horário: {horario_de_inicio_e_termino}
+Link da Reunião: {link_da_reuniao}
+Número da reunião: {numero_da_reuniao}
+E-mail dos participantes: {emails2}
+''')
