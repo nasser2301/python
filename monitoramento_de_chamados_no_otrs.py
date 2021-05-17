@@ -19,12 +19,14 @@ login = 'login'
 senha = 'senha'
 
 # Abre o navegador
-w = webdriver.Chrome(executable_path=r'/home/nasser/Desktop/chromedriver')
+w = webdriver.Chrome()
 w.maximize_window()
 w.get(url)
 w.find_element_by_id('User').send_keys(login)
 w.find_element_by_id('Password').send_keys(senha, Keys.ENTER)
-s(1)
+s(3)
+w.find_element_by_xpath('//*[@id="nav-Tickets"]/a').click()
+w.find_element_by_xpath('//*[@id="nav-Tickets-Queueview"]/a').click()
 
 while True:
     try:
