@@ -99,3 +99,5 @@ while True:
 planilha = pd.DataFrame(playstation)
 planilha_moldada = planilha.sort_values('Preço')
 planilha_moldada.to_excel(r'C:\Users\nasser\OneDrive\Área de Trabalho\mercado livre\valores.xlsx', index=False)
+
+web.close()
