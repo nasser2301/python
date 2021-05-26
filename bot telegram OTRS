@@ -460,7 +460,7 @@ Idade: {idade}
 ------------------------------------------------(#)
         ''')
 
-updater = Updater("###")
+updater = Updater(<token_telegram_bot>)
 dispatcher = updater.dispatcher
 
 dispatcher.add_handler(CommandHandler("menu", menu))
