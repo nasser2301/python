@@ -460,7 +460,7 @@ Idade: {idade}
 ------------------------------------------------(#)
         ''')
 
-updater = Updater("1874949741:AAG_hpcxDU6rWFu7WoKSo70xUFqh7pL51CM")
+updater = Updater("###")
 dispatcher = updater.dispatcher
 
 dispatcher.add_handler(CommandHandler("menu", menu))
