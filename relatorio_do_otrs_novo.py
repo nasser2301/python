@@ -143,7 +143,6 @@ else:
 
 
 tipo = tabela[['Tipo','Ticket#']].groupby('Tipo').count().sort_values(by=['Ticket#'], ascending=False)
-tipo
 
 
 # In[247]:
@@ -159,7 +158,7 @@ fracs = qtde_incidentes_requisicoes
 explode = (0, 0.05)
 pies1 = ax.pie(fracs, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True)
 Title = plt.title('TIPO')
-plt.savefig('/home/nasser/Área de Trabalho/Relatório/Tickets por tipo.pdf', format='pdf')
+plt.savefig('/home/nasser/Área de Trabalho/Relatório/Tickets por tipo.jpeg', format='jpeg')
 
 
 # # Agrupados por (Serviço)
@@ -221,6 +220,8 @@ nao_correto_180 = tabela.loc[tabela['Delta de tempo de solução em minutos'] < 
 correto_2160 = tabela.loc[tabela['Delta de tempo de solução em minutos'] > -2100]
 nao_correto_2160 = tabela.loc[tabela['Delta de tempo de solução em minutos'] <= -2100]
 
+encerrado_incorretamente = tabela.loc[tabela['Atendente/Proprietário'] == 'root@localhost']
+encerrado_corretamente = tabela.loc[tabela['Atendente/Proprietário'] != 'root@localhost']
 
 c60 = correto_60.value_counts().sum()
 nc60 = nao_correto_60.value_counts().sum()
@@ -230,6 +231,9 @@ c180 = correto_180.value_counts().sum()
 nc180 = nao_correto_180.value_counts().sum()
 c2160 = correto_2160.value_counts().sum()
 nc2160 = nao_correto_2160.value_counts().sum()
+ei = encerrado_incorretamente.value_counts().sum()
+ec = encerrado_corretamente.value_counts().sum()
+
 qtde_incidentes_requisicoes = list(tabela['Tipo'].value_counts())
 
 
@@ -312,8 +316,22 @@ servico['Ticket#'].sum()
 
 
 top10 = usuarios.head(10).sort_values(by=['Ticket#'], ascending=True).plot.barh(width=0.7)
-#plt.figure(figsize=(20,18))
 plt.savefig('/home/nasser/Área de Trabalho/Relatório/TOP 10', dpi = 300, bbox_inches='tight', format='jpeg')
+
+
+# # CHAMADOS ENCERRADOS CORRETAMENTE E INCORRETAMENTE
+
+fig = plt.figure(figsize=(10, 10))
+ax = fig.add_axes([0.1, 0.1, 0.8, 0.8])
+
+labels = 'Encerrado Corretamente', 'Encerrado Incorretamente'
+fracs = ec, ei
+explode = (0, 0.05)
+
+pies = ax.pie(fracs, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True)
+Title = plt.title('CHAMADO ENCERRADO CORRETAMENTE OU NÃO')
+plt.savefig('/home/nasser/Área de Trabalho/Relatório/CHAMADO ENCERRADO CORRETAMENTE OU NÃO', format='jpeg')
+
 
 
 # # Exclui a planilha do relatório
