@@ -26,7 +26,7 @@ minuto = completo[14:16]
 web = webdriver.Chrome('C:/Users/rhuan/OneDrive/Documentos/chromedriver.exe')
 web.get('http://urubu.in.iti.gov.br/otrs/index.pl')
 web.find_element_by_id('User').send_keys('rhuan.nasser')
-web.find_element_by_id('Password').send_keys('StifLeR2301#', Keys.ENTER)
+web.find_element_by_id('Password').send_keys('', Keys.ENTER)
 web.maximize_window()
 
 
