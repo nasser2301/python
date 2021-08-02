@@ -1,0 +1,102 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from time import sleep as sl
+import os.path, datetime, time, pandas as pd
+
+
+relatorio = os.path.isfile(fr'C:\Users\rhuan\Downloads\relatorio.xlsx')
+relatorio = os.path.isfile(fr'C:\Users\rhuan\Downloads\faq.csv')
+
+if relatorio == True:
+    os.remove(fr'C:\Users\rhuan\Downloads\relatorio.xlsx')
+
+if relatorio == True:
+    os.remove(fr'C:\Users\rhuan\Downloads\faq.csv')
+
+# Variáveis
+
+mes = str(datetime.date.today().month)
+ano = str(datetime.date.today().year)
+dia = str(datetime.date.today().day)
+completo = str(time.ctime())
+hora = completo[11:13]
+minuto = completo[14:16]
+
+# Chrome Driver
+
+web = webdriver.Chrome()
+web.get('http://urubu.in.iti.gov.br/otrs/index.pl')
+web.find_element_by_id('User').send_keys('rhuan.nasser')
+web.find_element_by_id('Password').send_keys('', Keys.ENTER)
+web.maximize_window()
+
+# Baixar a Planilha das FAQS
+
+web.get('http://urubu.in.iti.gov.br/otrs/index.pl?Action=AgentStatistics;Subaction=View;StatID=62')
+web.find_element_by_xpath('//*[@id="StartStatistic"]').click()
+
+# Acesso aos relatórios
+
+web.find_element_by_xpath('//*[@id="nav-Reports"]/a').click()
+web.find_element_by_xpath('//*[@id="nav-Reports-Statistics"]/a').click()
+web.find_element_by_xpath('//*[@id="AppWrapper"]/div[3]/div[2]/div/div[2]/table/tbody/tr[19]/td[6]/a').click()
+
+# Altera a data de acordo com a data atual para a extração
+
+web.find_element_by_xpath(f'//*[@id="UseAsRestrictionCreateTimeStartMonth"]/option[{mes}]').click()
+web.find_element_by_xpath(f'//*[@id="UseAsRestrictionCreateTimeStartYear"]/option[{ano[2:]}]').click()
+web.find_element_by_xpath(f'//*[@id="UseAsRestrictionCreateTimeStopDay"]/option[{dia}]').click()
+web.find_element_by_xpath(f'//*[@id="UseAsRestrictionCreateTimeStopMonth"]/option[{mes}]').click()
+web.find_element_by_xpath(f'//*[@id="UseAsRestrictionCreateTimeStopYear"]/option[{ano[2:]}]').click()
+web.find_element_by_xpath(f'//*[@id="StartStatistic"]/span').click()
+sl(3)
+
+# Renomeia o arquivo
+os.system(fr'rename C:\Users\rhuan\Downloads\Rel*.xlsx relatorio.xlsx')
+os.system(fr'rename C:\Users\rhuan\Downloads\FAQ_access_overview_*.csv faq.csv')
+
+# Pesquisa de Satisfação
+web.get('http://urubu.in.iti.gov.br/otrs/index.pl?Action=AgentSurveyOverview')
+sl(2)
+web.find_element_by_class_name('MasterAction').click()
+sl(2)
+avaliacoes = web.find_elements_by_class_name('SurveyGraphLeyend')
+
+Pesquisa_d = dict()
+Pesquisa_final = dict()
+Pesquisa_tempo_gasto = list()
+Pesquisa_cortesia = list()
+Pesquisa_geral = list()
+Pesquisa_qtde_respondidos = list()
+Pesquisa_l = list()
+
+for n, avaliacao in enumerate(avaliacoes):
+    if n == 0:
+        Pesquisa_d['Sim'] = avaliacao.text
+    if n == 1:
+        Pesquisa_d['Não'] = avaliacao.text
+        Pesquisa_l.append(Pesquisa_d)
+    if n == 2:
+        Pesquisa_d['sim'] = avaliacao.text
+    if n == 3:
+        Pesquisa_d['não'] = avaliacao.text
+        Pesquisa_l.append(Pesquisa_d)
+    if n == 4:
+        Pesquisa_d['Ótimo'] = avaliacao.text
+    if n == 5:
+        Pesquisa_d['Bom'] = avaliacao.text
+    if n == 6:
+        Pesquisa_d['Ruim'] = avaliacao.text
+    if n == 7:
+        Pesquisa_d['Péssimo'] = avaliacao.text
+        Pesquisa_l.append(Pesquisa_d)
+    if n == 8:
+        Pesquisa_d['Respondido'] = avaliacao.text
+    if n == 9:
+        Pesquisa_d['Não Respondido'] = avaliacao.text
+
+
+planilha = pd.DataFrame(Pesquisa_l)
+planilha.to_excel(rf'C:\Users\rhuan\Downloads\Pesquisa_de_Satisfacao.xlsx', index=False)
+
+web.close()
