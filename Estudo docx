@@ -1,0 +1,50 @@
+from docx import Document
+from docx.shared import Inches
+
+documento = Document()
+
+# Adicionando um título
+titulo = documento.add_heading("Relatório Mensal",0)
+
+# alignment = 0: Esquerda, alignment = 1: Centraliza, alignment = 2: Direita
+titulo.alignment = 1
+
+subtitulo_1 = documento.add_heading('SLA 1 HORA:', level=2)
+documento.add_picture('C:/Users/rhuan.nasser/Documents/Relatório/ate1hora.jpeg', width=Inches(6))
+documento.add_page_break()
+
+titulo = documento.add_heading("Relatório Mensal",0)
+titulo.alignment = 1
+subtitulo_2 = documento.add_heading('SLA 3 HORAS:', level=2)
+documento.add_picture('C:/Users/rhuan.nasser/Documents/Relatório/Até 3 horas.jpeg', width=Inches(6))
+documento.add_page_break()
+
+titulo = documento.add_heading("Relatório Mensal",0)
+titulo.alignment = 1
+subtitulo_3 = documento.add_heading('SLA 36 HORAS:', level=2)
+documento.add_picture('C:/Users/rhuan.nasser/Documents/Relatório/Até 36 horas.jpeg', width=Inches(6))
+documento.add_page_break()
+
+titulo = documento.add_heading("Relatório Mensal",0)
+titulo.alignment = 1
+subtitulo_4 = documento.add_heading('SLA 10 MINUTOS:', level=2)
+documento.add_picture('C:/Users/rhuan.nasser/Documents/Relatório/Até 10 minutos.jpeg', width=Inches(6))
+documento.add_page_break()
+
+titulo = documento.add_heading("Relatório Mensal",0)
+titulo.alignment = 1
+subtitulo_5 = documento.add_heading('TOP 10:', level=2)
+documento.add_picture('C:/Users/rhuan.nasser/Documents/Relatório/TOP 10.jpeg', width=Inches(6))
+documento.add_page_break()
+
+table = documento.add_table(rows=2, cols=2)
+
+# Deixando em negrito
+#paragrafo_7 = documento.add_paragraph()
+#paragrafo_7.add_run('''
+#      Aldous Huxley publicou o seu Brave New World em 1932. George Orwell, que não tinha em grande conta este livro ou o seu autor, publicou 17 anos depois a sua própria distopia, Nineteen Eighty-Four. Entre estas duas datas interpôs-se a Segunda Grande Guerra: não admira que na primeira a técnica básica da opressão do Estado fosse a manipulação genética e que na segunda, depois do descrédito em que o regime nazi lançou o eugenismo, as técnicas principais da opressão sejam a lavagem ao cérebro, a s, tal como Burgess, demasiado sensatos para levar muito a sério ou muito à letra tudo o que diz o poder, e é por isso que não confundimos José Sócrates ou Maria de Lurdes Rodrigues com Voldemort.
+#Ao contrário de Thatcher e de Reagan, Burgess não via no Estado a única, nem necessariamente a principal, fonte de opressão. O Estado que Burgess denuncia não é o pesadelo de Orwell, que para Burgess não passa disso mesmo: dum pesadelo. Nem é o Moloch burocrático da lenda negra anti-socialista. É, acima de tudo, o Estado de Ivan Petrovitch Pavlov e de Burrhus Frederic Skinner:
+#''').bold = True
+
+# Salva o documento criado
+documento.save('C:/Users/rhuan.nasser/Documents/Relatório/Documento_de_teste.docx')
