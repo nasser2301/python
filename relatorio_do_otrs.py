@@ -19,19 +19,20 @@ while True:
         hora = completo[11:13]
         minuto = completo[14:16]
         caminho_da_pasta_dos_relatorios = fr'C:\Users\rhuan.nasser\Documents\Relatório'
-
+        
+        
         # Chrome Driver
         web = webdriver.Chrome()
-        web.get('http://otrs.in.iti.gov.br/otrs/index.pl')
+        web.get('digite-o-dns-do-otrs')
         web.find_element_by_id('User').send_keys(login)
         web.find_element_by_id('Password').send_keys(senha, Keys.ENTER)
 
         # Printa a Pesquisa de Satisfação
-        web.get('http://otrs.in.iti.gov.br/otrs/index.pl?Action=AgentFAQJournal')
+        web.get('digite-o-dns-do-otr + ?Action=AgentFAQJournal')
         web.save_screenshot(fr'C:\Users\rhuan.nasser\Documents\Relatório\faq.png')
 
         # Printa a Pesquisa de Satisfação
-        web.get('http://otrs.in.iti.gov.br/otrs/index.pl?Action=AgentSurveyOverview')
+        web.get('digite-o-dns-do-otr + ?Action=AgentSurveyOverview')
         web.find_element_by_xpath('//*[@id="OverviewBody"]/form/table/tbody/tr[1]').click()
         web.execute_script('window.scrollTo(0, 3000);')
         web.save_screenshot(fr'C:\Users\rhuan.nasser\Documents\Relatório\pesquisa.png')
@@ -39,7 +40,7 @@ while True:
         web.maximize_window()
 
         # Faz o download do relatório do Suporte
-        web.get('http://otrs.in.iti.gov.br/otrs/index.pl?Action=AgentStatistics;Subaction=View;StatID=13')
+        web.get('digite-o-dns-do-otrs + ?Action=AgentStatistics;Subaction=View;StatID=13')
         sl(1)
         web.find_element_by_xpath('//*[@id="Format_Search"]').click()
         sl(1)
@@ -58,7 +59,7 @@ while True:
         #          fr'C:\Users\rhuan.nasser\OneDrive\Documentos\Relatório\suporte_relatorio_total.xlsx')
 
         # Faz o download do relatório do início do atendimento do Suporte
-        web.get('http://otrs.in.iti.gov.br/otrs/index.pl?Action=AgentStatistics;Subaction=View;StatID=15')
+        web.get('digite-o-dns-do-otr + ?Action=AgentStatistics;Subaction=View;StatID=15')
         web.find_element_by_xpath('//*[@id="Format_Search"]').click()
         sl(3)
         web.find_element_by_xpath('/html/body/div[3]/div[1]/div/ul/li[2]').click()
@@ -336,11 +337,11 @@ while True:
         email = outlook.CreateItem(0)
 
         # Configura as informações do seu e-mail
-        equipe_agnus = 'rhuan.nasser@iti.gov.br; italo.oliveira@iti.gov.br; airanildo.lima@iti.gov.br'
-        email.To = equipe_agnus #"rhuan.nasser@iti.gov.br"
+        equipe_agnus = 'email_utilizado_dst1; email_utilizado_dst2; email_utilizado_dst3'
+        email.To = equipe_agnus #"email_utilizado1_src"
         email.Subject = "Informações sobre a Equipe de Suporte do ITI"
         email.HTMLBody = fr"""
-        <p><h3>Prezado <strong>Rhuan</strong>,</h3></p>
+        <p><h3><strong>Prezados,</strong></h3></p>
             <p><h3>&emsp;Segue abaixo e em anexo informações úteis para a análise do atendimento do suporte!</h3></p><br>
         
             <center><strong><h1>Quantidade de Chamados Abertos por Setor</h1></strong><br><\center>
