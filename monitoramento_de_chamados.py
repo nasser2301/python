@@ -8,7 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep as sl
 from pygame import mixer
-import getpass, platform
+import getpass, platform, passwd
 
 SO = platform.system()
 
@@ -23,10 +23,10 @@ if 'Linux' in SO:
     driver = webdriver.Chrome(executable_path="chromedriver")
 
 driver.maximize_window()
-driver.get("http://otrs.in.iti.gov.br/otrs/index.pl")
+driver.get(passwd.Link().link)
 driver.find_element_by_id('User').send_keys(login, Keys.TAB)
 driver.find_element_by_id('Password').send_keys(password, Keys.ENTER)
-driver.get('http://otrs.in.iti.gov.br/otrs/index.pl?Action=AgentTicketQueue;QueueID=0;SortBy=Queue;OrderBy=Up;View='
+driver.get(f'{passwd.Link().link}?Action=AgentTicketQueue;QueueID=0;SortBy=Queue;OrderBy=Up;View='
            'Small;Filter=All')
 
 while True:
