@@ -13,13 +13,13 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from confidencial import senhaa, email, name_server
+from confidencial import senha, email, nome_do_servidor
 
 # Configurações para login e conexão com o gmail
-server = smtplib.SMTP(name_server)
+server = smtplib.SMTP(nome_do_servidor)
 server.ehlo()
 server.starttls()
-server.login(email, senhaa)
+server.login(email, senha)
 
 # Abertura do arquivo e leitura dos dados
 var = open('log', 'r')
