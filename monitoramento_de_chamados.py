@@ -8,7 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep as sl
 from pygame import mixer
-import getpass, platform, passwd
+import getpass, platform, confidencial
 
 SO = platform.system()
 
@@ -23,10 +23,10 @@ if 'Linux' in SO:
     driver = webdriver.Chrome(executable_path="chromedriver")
 
 driver.maximize_window()
-driver.get(passwd.Link().link)
+driver.get(confidencial.otrs)
 driver.find_element_by_id('User').send_keys(login, Keys.TAB)
 driver.find_element_by_id('Password').send_keys(password, Keys.ENTER)
-driver.get(f'{passwd.Link().link}?Action=AgentTicketQueue;QueueID=0;SortBy=Queue;OrderBy=Up;View='
+driver.get(f'{confidencial.otrs}?Action=AgentTicketQueue;QueueID=0;SortBy=Queue;OrderBy=Up;View='
            'Small;Filter=All')
 
 while True:
