@@ -2,7 +2,7 @@ import pandas as pd, datetime, time, os, win32com.client as win32, matplotlib.py
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep as sl
-from password import senha, login
+from confidencial import senha, email, otrs
 
 while True:
 
@@ -23,16 +23,16 @@ while True:
         
         # Chrome Driver
         web = webdriver.Chrome()
-        web.get('digite-o-dns-do-otrs')
-        web.find_element_by_id('User').send_keys(login)
+        web.get(otrs)
+        web.find_element_by_id('User').send_keys(email[:12])
         web.find_element_by_id('Password').send_keys(senha, Keys.ENTER)
 
         # Printa a Pesquisa de Satisfação
-        web.get('digite-o-dns-do-otr + ?Action=AgentFAQJournal')
+        web.get(f'{otrs}?Action=AgentFAQJournal')
         web.save_screenshot(fr'C:\Users\rhuan.nasser\Documents\Relatório\faq.png')
 
         # Printa a Pesquisa de Satisfação
-        web.get('digite-o-dns-do-otr + ?Action=AgentSurveyOverview')
+        web.get(f'{otrs}?Action=AgentSurveyOverview')
         web.find_element_by_xpath('//*[@id="OverviewBody"]/form/table/tbody/tr[1]').click()
         web.execute_script('window.scrollTo(0, 3000);')
         web.save_screenshot(fr'C:\Users\rhuan.nasser\Documents\Relatório\pesquisa.png')
@@ -40,7 +40,7 @@ while True:
         web.maximize_window()
 
         # Faz o download do relatório do Suporte
-        web.get('digite-o-dns-do-otrs + ?Action=AgentStatistics;Subaction=View;StatID=13')
+        web.get(f'{otrs}?Action=AgentStatistics;Subaction=View;StatID=13')
         sl(1)
         web.find_element_by_xpath('//*[@id="Format_Search"]').click()
         sl(1)
@@ -59,7 +59,7 @@ while True:
         #          fr'C:\Users\rhuan.nasser\OneDrive\Documentos\Relatório\suporte_relatorio_total.xlsx')
 
         # Faz o download do relatório do início do atendimento do Suporte
-        web.get('digite-o-dns-do-otr + ?Action=AgentStatistics;Subaction=View;StatID=15')
+        web.get(f'{otrs}?Action=AgentStatistics;Subaction=View;StatID=15')
         web.find_element_by_xpath('//*[@id="Format_Search"]').click()
         sl(3)
         web.find_element_by_xpath('/html/body/div[3]/div[1]/div/ul/li[2]').click()

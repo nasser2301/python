@@ -2,7 +2,7 @@ import pandas as pd, datetime, time, os, win32com.client as win32, matplotlib.py
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep as sl
-from passwordd import senha, login
+from confidencial import senha, email, otrs
 
 # Variáveis
 mes = str(datetime.date.today().month)
@@ -14,13 +14,13 @@ minuto = completo[14:16]
 
 # Chrome Driver
 web = webdriver.Chrome()
-web.get('http://otrs.in.iti.gov.br/otrs/index.pl')
-web.find_element_by_id('User').send_keys(login)
+web.get(otrs)
+web.find_element_by_id('User').send_keys(email[:12])
 web.find_element_by_id('Password').send_keys(senha, Keys.ENTER)
 web.maximize_window()
 
 # Faz o download do relatório do Suporte
-web.get('http://otrs.in.iti.gov.br/otrs/index.pl?Action=AgentStatistics;Subaction=View;StatID=13')
+web.get(f'{otrs}?Action=AgentStatistics;Subaction=View;StatID=13')
 web.find_element_by_xpath('//*[@id="Format_Search"]').click()
 sl(1)
 web.find_element_by_xpath('/html/body/div[3]/div[1]/div/ul/li[2]').click()
@@ -36,7 +36,7 @@ sl(5)
 os.system(fr'rename C:\Users\rhuan\Downloads\Rel*.xlsx suporte_relatorio_total.xlsx')
 
 # Faz o download do relatório do início do atendimento do Suporte
-web.get('http://otrs.in.iti.gov.br/otrs/index.pl?Action=AgentStatistics;Subaction=View;StatID=15')
+web.get(f'{otrs}?Action=AgentStatistics;Subaction=View;StatID=15')
 web.find_element_by_xpath('//*[@id="Format_Search"]').click()
 sl(1)
 web.find_element_by_xpath('/html/body/div[3]/div[1]/div/ul/li[2]').click()
