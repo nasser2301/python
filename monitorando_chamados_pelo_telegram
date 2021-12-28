@@ -1,0 +1,65 @@
+import telegram
+from telegram import Update, ForceReply, InputMediaPhoto
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from confidencial import token
+
+def monitor(update: Update, context: CallbackContext) -> None:
+
+    update.message.reply_text('Os chamados estão sendo monitorados!')
+
+    from selenium import webdriver
+    from selenium.webdriver.common.keys import Keys
+    from time import sleep as sl
+    import getpass, platform, confidencial
+
+    SO = platform.system()
+
+    if 'Windows' in SO:
+        driver = webdriver.Chrome(executable_path="chromedriver_windows.exe")
+    if 'Linux' in SO:
+        driver = webdriver.Chrome(executable_path="chromedriver")
+
+    driver.maximize_window()
+    driver.get(confidencial.link)
+    driver.find_element_by_id('User').send_keys(confidencial.login, Keys.TAB)
+    driver.find_element_by_id('Password').send_keys(confidencial.senha, Keys.ENTER)
+    driver.get(f'{confidencial.link}?Action=AgentTicketQueue;QueueID=0;SortBy=Queue;OrderBy=Up;View='
+               'Small;Filter=All')
+
+    while True:
+
+        lista = list()
+        chamados = driver.find_elements_by_class_name('MasterAction')
+
+        try:
+            star = driver.find_element_by_class_name('UnreadArticles')
+            if star:
+                update.message.reply_text('Nova nota!')
+
+        except:
+            pass
+
+        for chamado in chamados:
+            ticket = chamado.find_elements_by_xpath('//td[10]')
+            lista.append(ticket)
+
+        for estados in lista[0]:
+            estado = estados.text
+            if 'novo' in estado:
+                update.message.reply_text('Novo chamado na fila!')
+                sl(10)
+
+        driver.refresh()
+        sl(2)
+
+
+def main() -> None:
+
+    updater = Updater(token)
+    dispatcher = updater.dispatcher
+    dispatcher.add_handler(CommandHandler("monitor", monitor))
+    updater.start_polling()
+
+
+if __name__ == '__main__':
+    main()
