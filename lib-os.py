@@ -40,4 +40,11 @@ os.chown('/home/nasser/teste', 1000, 1000)
 os.system('ls -l /home/nasser/teste')
 
 # altera o diretório raiz
-os.chroot("/home/nasser")
+#os.chroot("/home/nasser")
+
+# Retorna o diretório atual. Faz a mesma coisa que o pwd
+print(os.getcwd())
+
+# inclui todos os arquivos e diretórios em uma lista
+print(os.listdir())
+
