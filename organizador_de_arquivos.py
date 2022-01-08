@@ -1,14 +1,15 @@
+#!/usr/bin/python3.8
+
 import os
 
 usuario = os.environ['USERNAME']
-
-cam_dir_downloads = fr'C:/Users/{usuario}/Downloads'
-cam_dir_ISO = fr'C:/Users/{usuario}/Downloads/ISO'
-cam_dir_ZIPADOS = fr'C:/Users/{usuario}/Downloads/ZIPADOS'
-cam_dir_EXECUTÁVEIS = fr'C:/Users/{usuario}/Downloads/EXECUTÁVEIS'
-cam_dir_ARQUIVOS_GERAIS = fr'C:/Users/{usuario}/Downloads/ARQUIVOS_GERAIS'
-cam_dir_IMAGENS = fr'C:/Users/{usuario}/Downloads/IMAGENS'
-cam_dir_VIDEOS_E_SONS = fr'C:/Users/{usuario}/Downloads/VIDEOS_E_SONS'
+cam_dir_downloads = fr'/home/{usuario}/Downloads'
+cam_dir_ISO = fr'/home/{usuario}/Downloads/ISO'
+cam_dir_ZIPADOS = fr'/home/{usuario}/Downloads/ZIPADOS'
+cam_dir_EXECUTÁVEIS = fr'/home/{usuario}/Downloads/EXECUTÁVEIS'
+cam_dir_ARQUIVOS_GERAIS = fr'/home/{usuario}/Downloads/ARQUIVOS_GERAIS'
+cam_dir_IMAGENS = fr'/home/{usuario}/Downloads/IMAGENS'
+cam_dir_VIDEOS_E_SONS = fr'/home/{usuario}/Downloads/VIDEOS_E_SONS'
 
 dir_downloads = os.listdir(cam_dir_downloads)
 
@@ -28,7 +29,7 @@ for arquivo in dir_downloads:
             os.mkdir(cam_dir_ZIPADOS)
             os.rename(fr'{cam_dir_downloads}/{arquivo}', fr'{cam_dir_downloads}/ZIPADOS/{arquivo}')
 
-    if '.msi' in arquivo or '.exe' in arquivo or '.EXE' in arquivo:
+    if '.msi' in arquivo or '.exe' in arquivo or '.EXE' in arquivo or '.deb' in arquivo:
         if os.path.isdir(cam_dir_EXECUTÁVEIS):
             os.rename(fr'{cam_dir_downloads}/{arquivo}', fr'{cam_dir_downloads}/EXECUTÁVEIS/{arquivo}')
         if not os.path.isdir(cam_dir_EXECUTÁVEIS):
@@ -38,7 +39,7 @@ for arquivo in dir_downloads:
     if '.pdf' in arquivo or '.odf' in arquivo or '.txt' in arquivo or '.doc' in arquivo or '.docx' in arquivo\
             or '.accdb' in arquivo or '.xlsx' in arquivo or '.log' in arquivo or '.html' in arquivo\
             or '.pub' in arquivo or '.csv' in arquivo or '.pbix' in arquivo or '.odt' in arquivo or '.ods' in arquivo \
-            or '.bpm' in arquivo:
+            or '.bpm' in arquivo or '.xml' in arquivo:
 
         if os.path.isdir(cam_dir_ARQUIVOS_GERAIS):
             os.rename(fr'{cam_dir_downloads}/{arquivo}', fr'{cam_dir_downloads}/ARQUIVOS_GERAIS/{arquivo}')
