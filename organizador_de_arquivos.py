@@ -1,4 +1,4 @@
-#!/usr/bin/python3.8
+#!/usr/bin/python3.10
 
 import os
 
@@ -22,7 +22,7 @@ for arquivo in dir_downloads:
             os.mkdir(cam_dir_ISO)
             os.rename(fr'{cam_dir_downloads}/{arquivo}', fr'{cam_dir_downloads}/ISO/{arquivo}')
 
-    if '.zip' in arquivo or '.7z' in arquivo or '.tar' in arquivo or '.TAR' in arquivo or '.rar' in arquivo:
+    if '.zip' in arquivo or '.7z' in arquivo or '.tar' in arquivo or '.TAR' in arquivo or '.rar' in arquivo or '.tgz' in arquivo:
         if os.path.isdir(cam_dir_ZIPADOS):
             os.rename(fr'{cam_dir_downloads}/{arquivo}', fr'{cam_dir_downloads}/ZIPADOS/{arquivo}')
         if not os.path.isdir(cam_dir_ZIPADOS):
@@ -39,7 +39,7 @@ for arquivo in dir_downloads:
     if '.pdf' in arquivo or '.odf' in arquivo or '.txt' in arquivo or '.doc' in arquivo or '.docx' in arquivo\
             or '.accdb' in arquivo or '.xlsx' in arquivo or '.log' in arquivo or '.html' in arquivo\
             or '.pub' in arquivo or '.csv' in arquivo or '.pbix' in arquivo or '.odt' in arquivo or '.ods' in arquivo \
-            or '.bpm' in arquivo or '.xml' in arquivo:
+            or '.bpm' in arquivo or '.xml' in arquivo or '.xlsb' in arquivo or '.yml' in arquivo or '.yaml' in arquivo:
 
         if os.path.isdir(cam_dir_ARQUIVOS_GERAIS):
             os.rename(fr'{cam_dir_downloads}/{arquivo}', fr'{cam_dir_downloads}/ARQUIVOS_GERAIS/{arquivo}')
@@ -48,7 +48,7 @@ for arquivo in dir_downloads:
             os.rename(fr'{cam_dir_downloads}/{arquivo}', fr'{cam_dir_downloads}/ARQUIVOS_GERAIS/{arquivo}')
 
     if '.jpeg' in arquivo or '.JPEG' in arquivo or '.png' in arquivo or '.PNG' in arquivo or '.jpg' in arquivo\
-            or '.JPG' in arquivo:
+            or '.JPG' in arquivo or '.webp' in arquivo:
         if os.path.isdir(cam_dir_IMAGENS):
             os.rename(fr'{cam_dir_downloads}/{arquivo}', fr'{cam_dir_downloads}/IMAGENS/{arquivo}')
         if not os.path.isdir(cam_dir_IMAGENS):
