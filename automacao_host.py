@@ -15,8 +15,8 @@ nav.find_element(By.ID, "UserName").send_keys(login)
 nav.find_element(By.ID, "Password").send_keys(password)
 nav.find_element(By.ID, "boton").send_keys(Keys.ENTER)
 
-sl(2)
-nav.find_element(By.XPATH, '//*[@id="calendario"]/div/table/tbody/tr[1]/td[2]').click()
+sl(5)
+nav.find_element(By.XPATH, '//*[@id="calendario"]/div/table/tbody/tr[1]/td[5]').click()
 
 n = nav.find_elements(By.CLASS_NAME, 'diaInhabil')
 
@@ -46,3 +46,4 @@ while True:
 
     else:
         nav.find_element(By.ID, "btnDiaSiguiente").click()
+nav.close()
