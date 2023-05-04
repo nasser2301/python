@@ -39,7 +39,8 @@ for arquivo in dir_downloads:
     if '.pdf' in arquivo or '.odf' in arquivo or '.txt' in arquivo or '.doc' in arquivo or '.docx' in arquivo\
             or '.accdb' in arquivo or '.xlsx' in arquivo or '.log' in arquivo or '.html' in arquivo\
             or '.pub' in arquivo or '.csv' in arquivo or '.pbix' in arquivo or '.odt' in arquivo or '.ods' in arquivo \
-            or '.bpm' in arquivo or '.xml' in arquivo or '.xlsb' in arquivo or '.yml' in arquivo or '.yaml' in arquivo:
+            or '.bpm' in arquivo or '.xml' in arquivo or '.xlsb' in arquivo or '.yml' in arquivo or '.yaml' in arquivo \
+            or '.json' in arquivo or '.ppt' in arquivo or '.pptx' in arquivo or '.jar' in arquivo:
 
         if os.path.isdir(cam_dir_ARQUIVOS_GERAIS):
             os.rename(fr'{cam_dir_downloads}/{arquivo}', fr'{cam_dir_downloads}/ARQUIVOS_GERAIS/{arquivo}')

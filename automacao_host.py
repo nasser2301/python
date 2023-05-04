@@ -16,7 +16,7 @@ nav.find_element(By.ID, "Password").send_keys(password)
 nav.find_element(By.ID, "boton").send_keys(Keys.ENTER)
 
 sl(5)
-nav.find_element(By.XPATH, '//*[@id="calendario"]/div/table/tbody/tr[1]/td[5]').click()
+nav.find_element(By.XPATH, '//*[@id="calendario"]/div/table/tbody/tr[1]/td[7]').click()
 
 n = nav.find_elements(By.CLASS_NAME, 'diaInhabil')
 
